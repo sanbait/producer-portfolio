@@ -32,6 +32,11 @@ const cards = [
     description:
       "Принимаю решения на основе поведенческой аналитики и продуктовых метрик. Благодаря опыту прототипирования на Unreal Engine 5 (Blueprints), проверяю системные гипотезы в реальном геймплее и говорю на одном языке с командой разработки.",
   },
+  {
+    title: "AI-АВТОМАТИЗАЦИЯ",
+    description:
+      "Внедряю AI-инструменты для ускорения производства и глубокого анализа: автоматизирую пайплайны, сокращаю время на рутину и эффективно обрабатываю массивы данных.",
+  },
 ] as const;
 
 export function TechStack() {
@@ -47,7 +52,7 @@ export function TechStack() {
           </p>
         </FadeInSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-12">
           {cards.map((card, i) => (
             <FadeInSection key={card.title} delay={0.1 + i * 0.1}>
               <div

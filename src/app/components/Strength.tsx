@@ -33,6 +33,11 @@ export function Strength() {
       description:
         "Нахожу, за счёт чего продукт может расти кратно: монетизация, удержание, прогрессия, переработка цикла, новый рынок, новый вектор развития. Превращаю эти точки в понятный план действий с измеримым эффектом для продукта и бизнеса.",
     },
+    {
+      title: "AI-АВТОМАТИЗАЦИЯ",
+      description:
+        "Внедряю AI-инструменты для ускорения производства и глубокого анализа: автоматизирую пайплайны, сокращаю время на рутину и эффективно обрабатываю массивы данных.",
+    },
   ];
 
   const row1 = [
@@ -119,7 +124,7 @@ export function Strength() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 lg:gap-14">
             {content.map((item, i) => (
               <FadeInSection key={i} delay={0.1 + i * 0.1}>
                 <div
