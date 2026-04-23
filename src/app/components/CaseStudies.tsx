@@ -89,9 +89,9 @@ const cases: CaseStudy[] = [
     id: 1,
     tag: "Telegram Mini App",
     tagColor: "text-cyan-300 bg-cyan-500/15 border-cyan-500/30",
-    title: "Miner Kombat — перехват проекта из затяжного кризиса и полный пивот за 3,5 месяца",
+    title: "Miner Kombat — Пивот проекта",
     subtitle:
-      "Мидкорный TMA-кликер. Добыча ресурсов, ресурсная прогрессия, токеномика. В версии 2 — встроенная B2B-платформа для партнёров и рекламодателей.",
+      "Мидкорный TMA-кликер. Добыча ресурсов, ресурсная прогрессия, токеномика.",
     image: minerKombatImg,
     accent: "from-cyan-600 to-cyan-400",
     accentBg: "border-cyan-500/20",
@@ -102,7 +102,7 @@ const cases: CaseStudy[] = [
       { icon: <Users size={14} />, value: "4 человека", label: "Команда" },
     ],
     // Passport fields (right side in modal)
-    role: "Продюсер проекта — операционное и производственное управление",
+    role: "Game Producer\\HoO",
     company: "MK",
     platforms: "Telegram",
     team: "5 человек",
@@ -647,12 +647,10 @@ function renderResultLine(line: string) {
 export function CaseStudies() {
   const [index, setIndex] = useState(0);
   const isMobile = useIsMobile();
-  const mobileNavRef = useRef<HTMLDivElement | null>(null);
   const caseTopRef = useRef<HTMLDivElement | null>(null);
   const caseCardInViewRef = useRef<HTMLDivElement | null>(null);
   const swipeStartRef = useRef<{ x: number; y: number; pointerId: number } | null>(null);
   const pendingScrollRef = useRef(false);
-  const scrollTargetRef = useRef<"mobileNav" | "caseTop">("caseTop");
   const current = cases[index] ?? cases[0];
   const decisions = current ? getKeyDecisions(current) : [];
   const resultMetrics = current ? parseOutcomeMetrics(current) : [];
@@ -664,21 +662,19 @@ export function CaseStudies() {
     window.scrollTo({ top: Math.max(0, top), behavior });
   };
   const scrollToCurrentTarget = (behavior: ScrollBehavior = "smooth") => {
-    const target = scrollTargetRef.current === "mobileNav" ? mobileNavRef.current : caseTopRef.current;
+    const target = caseTopRef.current;
     if (!target) return;
     scrollToElement(target, behavior);
   };
   const goPrev = () => {
     pendingScrollRef.current = true;
-    scrollTargetRef.current = isMobile ? "mobileNav" : "caseTop";
     setIndex((v) => (v - 1 < 0 ? cases.length - 1 : v - 1));
   };
   const goNext = () => {
     pendingScrollRef.current = true;
-    scrollTargetRef.current = isMobile ? "mobileNav" : "caseTop";
     setIndex((v) => (v + 1 >= cases.length ? 0 : v + 1));
   };
-  const shouldHandleSwipe = (e: React.PointerEvent) => isMobile || e.pointerType === "touch";
+  const shouldHandleSwipe = (e: React.PointerEvent) => !isMobile && e.pointerType === "touch";
   const isInteractiveTarget = (target: EventTarget | null) => {
     const el = target as HTMLElement | null;
     if (!el) return false;
@@ -692,7 +688,7 @@ export function CaseStudies() {
   }, [index]);
 
   return (
-    <section id="cases" className="relative py-24 px-6 min-h-screen overflow-hidden" style={{ backgroundColor: "var(--bg-primary)" }}>
+    <section id="cases" className="relative py-24 px-0 sm:px-6 min-h-screen overflow-hidden" style={{ backgroundColor: "var(--bg-primary)" }}>
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -711,40 +707,22 @@ export function CaseStudies() {
         }}
       />
 
-      <div className="relative" style={{ maxWidth: "var(--container-max)", margin: "0 auto" }}>
+      <div className="relative" style={{ maxWidth: isMobile ? "100%" : "var(--container-max)", margin: isMobile ? 0 : "0 auto" }}>
         <FadeInSection>
-          <h2 className="screen-title" style={{ color: "var(--text-primary)", marginBottom: "var(--content-gap)" }}>
+          <h2 className="screen-title" style={{ color: "var(--text-primary)", marginBottom: "var(--content-gap)", padding: isMobile ? "0 24px" : undefined }}>
             КЛЮЧЕВЫЕ КЕЙСЫ
           </h2>
         </FadeInSection>
 
-        {!isMobile && isCaseCardInView ? (
-          <div className="case-fixed-nav" aria-hidden="true">
-            <button type="button" className="case-fixed-arrow case-fixed-arrow--left" onClick={goPrev} tabIndex={-1}>
-              <ChevronLeft size={28} />
+        {isCaseCardInView ? (
+          <div className="case-fixed-nav">
+            <button type="button" className="case-fixed-arrow case-fixed-arrow--left" onClick={goPrev} aria-label="Предыдущий кейс">
+              <ChevronLeft size={isMobile ? 20 : 28} />
             </button>
-            <button type="button" className="case-fixed-arrow case-fixed-arrow--right" onClick={goNext} tabIndex={-1}>
-              <ChevronRight size={28} />
+            <button type="button" className="case-fixed-arrow case-fixed-arrow--right" onClick={goNext} aria-label="Следующий кейс">
+              <ChevronRight size={isMobile ? 20 : 28} />
             </button>
           </div>
-        ) : null}
-
-        {isMobile ? (
-          <FadeInSection delay={0.02}>
-            <div ref={mobileNavRef} className="mt-4 flex items-center justify-between gap-3">
-              <button type="button" className="case-nav-button case-nav-button--compact text-xs sm:text-sm" onClick={goPrev}>
-                <ChevronLeft size={18} />
-                Предыдущий
-              </button>
-              <div className="text-center" style={{ color: "var(--text-tertiary)", fontSize: 12 }}>
-                {index + 1} / {cases.length}
-              </div>
-              <button type="button" className="case-nav-button case-nav-button--compact text-xs sm:text-sm" onClick={goNext}>
-                Следующий
-                <ChevronRight size={18} />
-              </button>
-            </div>
-          </FadeInSection>
         ) : null}
 
         <FadeInSection delay={0.05}>
