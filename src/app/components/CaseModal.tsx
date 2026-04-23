@@ -62,8 +62,18 @@ interface CaseModalProps {
   onClose: () => void;
 }
 
+function splitHeadline(title: string) {
+  const delimiters = [" — ", " – ", " - "];
+  for (const d of delimiters) {
+    const idx = title.indexOf(d);
+    if (idx > 0) return [title.slice(0, idx).trim(), title.slice(idx + d.length).trim()] as const;
+  }
+  return null;
+}
+
 export function CaseModal({ c, onClose }: CaseModalProps) {
   const [selectedPreview, setSelectedPreview] = useState(c.videoUrl ? -1 : 0);
+  const headline = splitHeadline(c.title);
 
   // Use case preview images if available, otherwise fallback to defaults
   const previewImages = c.previewImages && c.previewImages.length > 0
@@ -169,7 +179,15 @@ export function CaseModal({ c, onClose }: CaseModalProps) {
                 {/* Top Box: Title */}
                 <div className="p-6 min-h-[110px] flex items-center pr-12" style={{ borderBottom: "1px solid var(--border-default)" }}>
                   <h2 className="text-lg md:text-xl font-bold uppercase tracking-wide leading-snug" style={{ color: "var(--text-primary)", fontFamily: "var(--title-font, 'Syne', sans-serif)" }}>
-                    {c.title}
+                    {headline ? (
+                      <>
+                        <span style={{ color: "var(--accent-neon)" }}>{headline[0]}</span>
+                        {" — "}
+                        {headline[1]}
+                      </>
+                    ) : (
+                      c.title
+                    )}
                   </h2>
                 </div>
 
@@ -194,22 +212,56 @@ export function CaseModal({ c, onClose }: CaseModalProps) {
                     {c.availableOn && (
                       <div className="flex justify-between items-center gap-4">
                         <span style={{ color: "var(--text-secondary)" }}>Платформа</span>
-                        <div className="flex items-center gap-4 text-white">
-                          {/* Show one phone icon if either apple or android is present */}
-                          {(c.availableOn.includes("apple") || c.availableOn.includes("android")) && (
-                            <div className="flex items-center justify-center">
-                              <Smartphone size={18} />
-                            </div>
-                          )}
-                          {/* Show other platforms */}
-                          {c.availableOn.filter(p => p !== "apple" && p !== "android").map((platform) => (
-                            <div key={platform} className="flex items-center justify-center">
-                              {platform === "telegram" && <Send size={18} className="translate-y-[1px]" />}
-                              {platform === "line" && <MessageCircle size={18} className="text-[#06C755]" />}
-                              {platform === "pc" && <Monitor size={18} />}
-                              {platform === "web" && <Globe size={18} />}
-                            </div>
-                          ))}
+                        <div className="flex items-center text-white" style={{ gap: 10, flexWrap: "wrap", justifyContent: "flex-end" }}>
+                          {(() => {
+                            const text = c.platform || c.platforms || c.tag || "";
+                            const raw = (text || "").toLowerCase();
+                            const orderFromText: ("pc" | "mobile" | "web" | "telegram" | "line")[] = [];
+                            if (/\bpc\b/.test(raw)) orderFromText.push("pc");
+                            if (/\bmobile\b/.test(raw)) orderFromText.push("mobile");
+                            if (/\bweb\b/.test(raw)) orderFromText.push("web");
+                            if (/telegram/.test(raw)) orderFromText.push("telegram");
+                            if (/\bline\b/.test(raw)) orderFromText.push("line");
+
+                            const hasMobile = c.availableOn.includes("apple") || c.availableOn.includes("android");
+                            const keys = [
+                              ...(c.availableOn.includes("pc") ? (["pc"] as const) : []),
+                              ...(hasMobile ? (["mobile"] as const) : []),
+                              ...(c.availableOn.includes("web") ? (["web"] as const) : []),
+                              ...(c.availableOn.includes("telegram") ? (["telegram"] as const) : []),
+                              ...(c.availableOn.includes("line") ? (["line"] as const) : []),
+                            ] as const;
+
+                            const keySet = new Set(keys);
+                            const orderedKeys: ("pc" | "mobile" | "web" | "telegram" | "line")[] = [
+                              ...orderFromText.filter((k) => keySet.has(k)),
+                              ...(["pc", "mobile", "web", "telegram", "line"] as const).filter((k) => keySet.has(k) && !orderFromText.includes(k)),
+                            ];
+
+                            const iconByKey: Record<"pc" | "mobile" | "web" | "telegram" | "line", React.ReactNode> = {
+                              mobile: <Smartphone size={18} />,
+                              pc: <Monitor size={18} />,
+                              web: <Globe size={18} />,
+                              telegram: <Send size={18} className="translate-y-[1px]" />,
+                              line: <MessageCircle size={18} className="text-[#06C755]" />,
+                            };
+
+                            const labelByKey: Record<"pc" | "mobile" | "web" | "telegram" | "line", string> = {
+                              mobile: "Mobile",
+                              pc: "PC",
+                              web: "Web",
+                              telegram: "Telegram",
+                              line: "LINE",
+                            };
+
+                            return orderedKeys.map((k, idx) => (
+                              <span key={k} className="flex items-center" style={{ gap: 8, whiteSpace: "nowrap" }}>
+                                <span className="flex items-center">{iconByKey[k]}</span>
+                                <span>{labelByKey[k]}</span>
+                                {idx < orderedKeys.length - 1 ? <span style={{ opacity: 0.7, marginLeft: 10 }}>/</span> : null}
+                              </span>
+                            ));
+                          })()}
                         </div>
                       </div>
                     )}

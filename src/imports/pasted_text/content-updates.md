@@ -80,7 +80,7 @@ Lead System Designer
 Топ-3 банк РФ
 
 Роль:
-Lead Game Designer / Product Lead
+Lead Producer / Product Lead
 
 Короткое описание:
 TMA-геймификация для партнёрского контура банка.
@@ -114,7 +114,7 @@ Product Consultant
 WOLF
 
 Роль:
-Lead Game Designer / Product Manager
+Lead Producer / Product Manager
 
 Короткое описание:
 Геймификация инвестиционной темы через карьерную прогрессию и игровой цикл.
@@ -230,16 +230,16 @@ AI Tools
 вымышленная студия/роль
 
 Заменить на:
-Должность: Lead Game Designer / Product Lead
+Должность: Lead Producer / Product Lead
 Компания: Gratio (Product Dev Studio)
 Период: Июль 2024 — настоящее время
 Текст:
-Управление геймдизайном для нескольких проектов: собственный gamification-продукт и консалтинг для корпоративных клиентов.
+Управление продюсированием для нескольких проектов: собственный gamification-продукт и консалтинг для корпоративных клиентов.
 
 Карточка 2
 
 Заменить на:
-Должность: Senior Game Designer (Economy Focus)
+Должность: Senior Producer (Economy Focus)
 Компания: Decartel Ltd.
 Период: Ноябрь 2022 — Июль 2024
 Текст:
@@ -252,16 +252,16 @@ AI Tools
 Компания: HWC-Studio
 Период: Февраль 2022 — Ноябрь 2022
 Текст:
-Построение отдела game design с нуля, управление продуктовым видением от pre-production до MVP.
+Построение продюсерского отдела с нуля, управление продуктовым видением от pre-production до MVP.
 
 Карточка 4
 
 Заменить на:
-Должность: Game Designer → Senior Game Designer
+Должность: Producer → Senior Producer
 Компания: Void Cat Games
 Период: Январь 2019 — Январь 2022
 Текст:
-Полный цикл game design для PC игр от концепции до релиза в Steam.
+Полный цикл продюсирования для PC игр от концепции до релиза в Steam.
 
 9. Финальный экран
 Заголовок
@@ -275,7 +275,7 @@ READY TO LEVEL UP?
 Текст под ним
 
 Заменить на:
-Открыт к предложениям по ролям Lead / Senior Game Designer, Product Lead и смежным позициям на стыке game design, экономики и продукта.
+Открыт к предложениям по ролям Lead / Senior Producer, Product Lead и смежным позициям на стыке продюсирования, экономики и продукта.
 
 Кнопка
 

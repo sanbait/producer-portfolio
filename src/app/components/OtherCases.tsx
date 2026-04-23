@@ -6,7 +6,6 @@ import AlfaImg from "../../assets/Alfa(1).png";
 import MotivImg from "../../assets/MOTIV.webp";
 import DixyImg from "../../assets/Dixy(1).jpg";
 import VrImg from "../../assets/VR.jpg";
-import StellarisImg from "../../assets/Tirstellar.png";
 import CryptoPunksImg from "../../assets/CP.png";
 import UnderdogsImg from "../../assets/underdogs.jpg";
 
@@ -51,7 +50,7 @@ const otherCases: OtherCase[] = [
   },
   {
     title: "Alfa Bot",
-    role: "GAME DESIGNER",
+    role: "PRODUCER",
     description: "Игровая реферальная система для партнёрской компании одного из топ-3 банков РФ",
     tags: ["TMA", "BANKING", "REFERRAL", "REWARDS", "PROGRESSION", "META"],
     platform: "TMA",
@@ -81,7 +80,7 @@ const otherCases: OtherCase[] = [
   },
   {
     title: "VR Healthcare",
-    role: "GAME DESIGNER",
+    role: "PRODUCER",
     description: "VR-игра для релакса пациентов в сети клиник ОАЭ",
     tags: ["VR", "HEALTHCARE", "RELAX", "INTERACTIVE", "MINI-GAMES", "UX"],
     platform: "VR",
@@ -90,18 +89,8 @@ const otherCases: OtherCase[] = [
     result: "Отвечал за общий вижн проекта, кор-механики и визуальное направление.",
   },
   {
-    title: "Stellaris",
-    role: "LEAD GAME DESIGNER",
-    description: "Масштабная MMORPG в космическом сеттинге с развитой экономикой",
-    tags: ["MMORPG", "ECONOMY", "META", "SYSTEMS", "PVP", "PVE"],
-    platform: "PC / MOBILE / WEB",
-    image: StellarisImg,
-    task: "Масштабная MMORPG в космическом сеттинге с глубокой экономикой, развитием игрока и большим системным слоем.",
-    result: "Отвечал за направление геймдизайна в компании, экономику проекта, мета-системы и общение с заказчиками.",
-  },
-  {
     title: "Крипто Панки",
-    role: "GAME DESIGNER",
+    role: "PRODUCER",
     description: "Одна из первых успешных крипто-игр в TMA с амбассадорами NFT",
     tags: ["TMA", "CRYPTO", "NFT", "COMMUNITY", "ECONOMY", "LIVE-OPS"],
     platform: "TMA",
@@ -111,7 +100,7 @@ const otherCases: OtherCase[] = [
   },
   {
     title: "Underdogs",
-    role: "GAME DESIGNER",
+    role: "PRODUCER",
     description: "Изометрический тактический MMO-шутер в постапокалиптическом сеттинге США",
     tags: ["PC", "MMO", "SHOOTER", "TACTICAL", "EXTRACTION", "UNITY"],
     platform: "PC",

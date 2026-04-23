@@ -1,8 +1,9 @@
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { AboutMe } from "./components/AboutMe";
+import { ResponsibilityAreas } from "./components/ResponsibilityAreas";
 import { CaseStudies } from "./components/CaseStudies";
-import { OtherCases } from "./components/OtherCases";
+import { Experience } from "./components/Experience";
 import { Strength } from "./components/Strength";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
@@ -13,8 +14,9 @@ export default function App() {
       <Navbar />
       <Hero />
       <AboutMe />
+      <ResponsibilityAreas />
       <CaseStudies />
-      <OtherCases />
+      <Experience />
       <Strength />
       <Contact />
       <Footer />

@@ -20,7 +20,7 @@ export function Footer() {
             color: "var(--text-tertiary)",
           }}
         >
-          GAME DESIGNER • БАТУРИН АЛЕКСАНДР
+          GAME PRODUCER / HEAD OF OPERATION • БАТУРИН АЛЕКСАНДР
         </p>
       </div>
     </footer>

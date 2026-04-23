@@ -22,43 +22,14 @@ export function AboutMe() {
   return (
     <section
       id="about"
-      className="py-24 px-6"
-      style={{ backgroundColor: "var(--bg-secondary)" }}
+      className="pt-24 pb-10 px-6"
+      style={{ backgroundColor: "var(--accent-neon)" }}
     >
       <div style={{ maxWidth: "var(--container-max)", margin: "0 auto" }}>
-        <div className="flex flex-col lg:flex-row gap-16 items-start">
-          {/* Left: Portrait */}
-          <FadeInSection>
-            <div className="relative flex-shrink-0 w-[280px] h-[347px] mx-auto sm:w-[360px] sm:h-[446px] lg:w-[420px] lg:h-[520px] lg:mx-0 mb-10 lg:mb-0">
-              <div className="relative w-full h-full">
-                <div
-                  className="absolute inset-0 overflow-hidden"
-                  style={{ border: "1px solid var(--border-default)", backgroundColor: "rgba(0, 0, 0, 0.25)" }}
-                >
-                  <ImageWithFallback
-                    src={portrait}
-                    alt="Александр Батурин"
-                    className="w-full h-full object-cover"
-                    style={{ objectPosition: "center 20%" }}
-                  />
-                </div>
-                {/* Neon accent bars */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 h-1"
-                  style={{ backgroundColor: "var(--accent-neon)" }}
-                />
-                <div
-                  className="absolute top-0 left-0 w-1 h-20"
-                  style={{ backgroundColor: "var(--accent-neon)" }}
-                />
-              </div>
-            </div>
-          </FadeInSection>
-
-          {/* Right: About content */}
-          <div className="flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-14 items-start">
+          <div className="flex-1 lg:order-1">
             <FadeInSection delay={0.1}>
-              <h2 className="screen-title" style={{ color: "var(--text-primary)", marginBottom: "var(--heading-gap)" }}>
+              <h2 className="screen-title screen-title--black" style={{ color: "#000000", marginBottom: "var(--heading-gap)" }}>
                 ОБО МНЕ
               </h2>
             </FadeInSection>
@@ -70,97 +41,278 @@ export function AboutMe() {
                   fontFamily: "var(--body-font)",
                   fontSize: "var(--body-size)",
                   lineHeight: "var(--body-lh)",
-                  color: "var(--text-secondary)",
+                  color: "rgba(0, 0, 0, 0.82)",
+                  fontWeight: 850,
                 }}
               >
                 <p>
-                  Senior Game Designer с 8+ годами опыта. Специализируюсь на экономике, системном дизайне и монетизации. Смотрю на проект не как на набор фич, а как на цельную игровую систему: прогрессия, баланс, награды, удержание, мотивация игрока и точки роста продукта.
+                  12 лет опыта в геймдеве и геймификации. Запускаю продукты, пересобираю команды и процессы, нахожу системные ошибки, которые тормозят рост и съедают бюджет.
                 </p>
                 <p>
-                  Работаю с PC/Console, mobile, Web и Telegram Mini Apps. Проектирую игровые экономики, системы прогрессии, социальные механики и монетизацию для F2P, MMO и геймифицированных продуктов. Моя сильная сторона — data-driven подход and макро-видение: умею видеть проект целиком, принимать решения на основе метрик и собирать решения, которые работают не только на уровне дизайна, но и на уровне продукта.
+                  Мой бэкграунд в геймдизайне, продукте и операционном управлении помогает видеть проект целиком: экономика, производство, приоритеты, метрики и точки роста.
+                </p>
+                <p>
+                  Подключаюсь в моменты, когда продукту нужен запуск, аудит или поворот стратегии. Собираю рабочую систему и довожу решения до результата.
                 </p>
               </div>
             </FadeInSection>
+          </div>
 
-            <FadeInSection delay={0.3}>
-              <div
-                className="mt-10 pt-8"
-                style={{ borderTop: "1px solid var(--border-default)" }}
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-8 gap-x-6">
-                  <div>
-                    <p
-                      className="mb-2 uppercase"
-                      style={{
-                        fontFamily: "var(--label-font)",
-                        fontWeight: "var(--label-weight)",
-                        fontSize: "var(--label-size)",
-                        lineHeight: "var(--label-lh)",
-                        letterSpacing: "var(--label-ls)",
-                        color: "var(--accent-neon)",
-                        opacity: 0.8
-                      }}
-                    >
-                      ЛОКАЦИЯ
-                    </p>
-                    <p style={{ color: "var(--text-primary)" }}>Москва / удалённо</p>
+          <div className="w-full lg:order-2">
+            <FadeInSection>
+              <div className="mx-auto lg:mx-0 w-full max-w-[240px] sm:max-w-[300px] lg:max-w-[340px]">
+                <div className="relative w-full aspect-[4/5]">
+                  <div
+                    className="absolute inset-0 overflow-hidden"
+                    style={{ border: "1px solid rgba(0, 0, 0, 0.25)", backgroundColor: "rgba(0, 0, 0, 0.04)" }}
+                  >
+                    <ImageWithFallback
+                      src={portrait}
+                      alt="Александр Батурин"
+                      className="w-full h-full object-cover"
+                      style={{ objectPosition: "center 20%" }}
+                    />
                   </div>
-                  <div>
-                    <p
-                      className="mb-2 uppercase"
-                      style={{
-                        fontFamily: "var(--label-font)",
-                        fontWeight: "var(--label-weight)",
-                        fontSize: "var(--label-size)",
-                        lineHeight: "var(--label-lh)",
-                        letterSpacing: "var(--label-ls)",
-                        color: "var(--accent-neon)",
-                        opacity: 0.8
-                      }}
-                    >
-                      ОПЫТ
-                    </p>
-                    <p style={{ color: "var(--text-primary)" }}>8+ лет в game design</p>
-                  </div>
-                  <div>
-                    <p
-                      className="mb-2 uppercase"
-                      style={{
-                        fontFamily: "var(--label-font)",
-                        fontWeight: "var(--label-weight)",
-                        fontSize: "var(--label-size)",
-                        lineHeight: "var(--label-lh)",
-                        letterSpacing: "var(--label-ls)",
-                        color: "var(--accent-neon)",
-                        opacity: 0.8
-                      }}
-                    >
-                      ПЛАТФОРМЫ
-                    </p>
-                    <p style={{ color: "var(--text-primary)" }}>PC/Console, mobile, Web, TMA</p>
-                  </div>
-                  <div>
-                    <p
-                      className="mb-2 uppercase"
-                      style={{
-                        fontFamily: "var(--label-font)",
-                        fontWeight: "var(--label-weight)",
-                        fontSize: "var(--label-size)",
-                        lineHeight: "var(--label-lh)",
-                        letterSpacing: "var(--label-ls)",
-                        color: "var(--accent-neon)",
-                        opacity: 0.8
-                      }}
-                    >
-                      СПЕЦИАЛИЗАЦИЯ
-                    </p>
-                    <p style={{ color: "var(--text-primary)" }}>Economy, Systems, Data-Driven</p>
-                  </div>
+                  <div
+                    className="absolute bottom-0 left-0 right-0 h-1"
+                    style={{ backgroundColor: "#000000" }}
+                  />
+                  <div
+                    className="absolute top-0 left-0 w-1 h-20"
+                    style={{ backgroundColor: "#000000" }}
+                  />
                 </div>
               </div>
             </FadeInSection>
           </div>
         </div>
+
+        <FadeInSection delay={0.3}>
+          <div className="mt-10 pt-8" style={{ borderTop: "1px solid rgba(0, 0, 0, 0.25)" }}>
+            <h3
+              className="screen-title screen-title--black uppercase mb-6"
+              style={{
+                fontFamily: "var(--h3-font)",
+                fontWeight: "850",
+                fontSize: "clamp(1.15rem, 1.6vw, 1.4rem)",
+                lineHeight: 1.15,
+                letterSpacing: "0.08em",
+                color: "#000000",
+              }}
+            >
+              МАСШТАБ ОПЫТА
+            </h3>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 items-stretch">
+              {[
+                { value: "10+", label: "лет в менеджменте" },
+                { value: "40", label: "человек в команде" },
+                { value: "10 млн", label: "макс бюджет проекта" },
+                { value: "15+", label: "проектов" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="module-card p-0 h-full"
+                  style={{
+                    borderRadius: 0,
+                    "--module-card-bg": "transparent",
+                    minHeight: "112px",
+                  }}
+                >
+                  <div className="p-6 h-full flex flex-col justify-center items-center text-center" style={{ border: "1px solid rgba(0, 0, 0, 0.20)" }}>
+                    <div
+                      style={{
+                        fontFamily: "var(--h3-font)",
+                        fontSize: "clamp(1.6rem, 2.6vw, 2.2rem)",
+                        fontWeight: "900",
+                        letterSpacing: "0.02em",
+                        lineHeight: 1.05,
+                        color: "#000000",
+                      }}
+                    >
+                      {item.value}
+                    </div>
+                    <div
+                      className="mt-2"
+                      style={{
+                        fontFamily: "var(--body-font)",
+                        fontSize: "var(--secondary-size)",
+                        lineHeight: "var(--secondary-lh)",
+                        color: "rgba(0, 0, 0, 0.68)",
+                      }}
+                    >
+                      {item.label}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <h3
+              className="screen-title screen-title--black uppercase mb-6 mt-12"
+              style={{
+                fontFamily: "var(--h3-font)",
+                fontWeight: "850",
+                fontSize: "clamp(1.15rem, 1.6vw, 1.4rem)",
+                lineHeight: 1.15,
+                letterSpacing: "0.08em",
+                color: "#000000",
+              }}
+            >
+              С ЧЕМ КО МНЕ ПРИХОДЯТ
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-5 items-stretch">
+              <div
+                className="module-card p-0 h-full"
+                style={{
+                  borderRadius: 0,
+                  "--module-card-bg": "transparent",
+                  minHeight: "168px",
+                }}
+              >
+                <div className="p-7 h-full flex flex-col" style={{ border: "1px solid rgba(0, 0, 0, 0.20)" }}>
+                  <h3
+                    style={{
+                      fontFamily: "var(--h3-font)",
+                      fontSize: "1.25rem",
+                      fontWeight: "900",
+                      letterSpacing: "0.02em",
+                      lineHeight: 1.15,
+                      color: "#000000",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    Запуск 0-1
+                  </h3>
+                  <div className="mt-4" style={{ height: 2, width: "100%", backgroundColor: "rgba(0, 0, 0, 0.75)" }} />
+                  <p
+                    className="mt-5"
+                    style={{
+                      fontFamily: "var(--body-font)",
+                      fontSize: "var(--secondary-size)",
+                      lineHeight: "var(--secondary-lh)",
+                      color: "rgba(0, 0, 0, 0.78)",
+                    }}
+                  >
+                    Запустил не MVP, а MVP и проект в сжатые сроки.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                className="module-card p-0 h-full"
+                style={{
+                  borderRadius: 0,
+                  "--module-card-bg": "transparent",
+                  minHeight: "168px",
+                }}
+              >
+                <div className="p-7 h-full flex flex-col" style={{ border: "1px solid rgba(0, 0, 0, 0.20)" }}>
+                  <h3
+                    style={{
+                      fontFamily: "var(--h3-font)",
+                      fontSize: "1.25rem",
+                      fontWeight: "900",
+                      letterSpacing: "0.02em",
+                      lineHeight: 1.15,
+                      color: "#000000",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    Аудит
+                  </h3>
+                  <div className="mt-4" style={{ height: 2, width: "100%", backgroundColor: "rgba(0, 0, 0, 0.75)" }} />
+                  <p
+                    className="mt-5"
+                    style={{
+                      fontFamily: "var(--body-font)",
+                      fontSize: "var(--secondary-size)",
+                      lineHeight: "var(--secondary-lh)",
+                      color: "rgba(0, 0, 0, 0.78)",
+                    }}
+                  >
+                    Найти причину просадки в продукте, маркетинге или исполнении. Провести глубокую диагностику операционных и продуктовых дыр.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                className="module-card p-0 h-full"
+                style={{
+                  borderRadius: 0,
+                  "--module-card-bg": "transparent",
+                  minHeight: "168px",
+                }}
+              >
+                <div className="p-7 h-full flex flex-col" style={{ border: "1px solid rgba(0, 0, 0, 0.20)" }}>
+                  <h3
+                    style={{
+                      fontFamily: "var(--h3-font)",
+                      fontSize: "1.25rem",
+                      fontWeight: "900",
+                      letterSpacing: "0.02em",
+                      lineHeight: 1.15,
+                      color: "#000000",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    Пивот
+                  </h3>
+                  <div className="mt-4" style={{ height: 2, width: "100%", backgroundColor: "rgba(0, 0, 0, 0.75)" }} />
+                  <p
+                    className="mt-5"
+                    style={{
+                      fontFamily: "var(--body-font)",
+                      fontSize: "var(--secondary-size)",
+                      lineHeight: "var(--secondary-lh)",
+                      color: "rgba(0, 0, 0, 0.78)",
+                    }}
+                  >
+                    Пересобрать стратегию, сохранить бюджет и темп команды при смене курса.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                className="module-card p-0 h-full"
+                style={{
+                  borderRadius: 0,
+                  "--module-card-bg": "transparent",
+                  minHeight: "168px",
+                }}
+              >
+                <div className="p-7 h-full flex flex-col" style={{ border: "1px solid rgba(0, 0, 0, 0.20)" }}>
+                  <h3
+                    style={{
+                      fontFamily: "var(--h3-font)",
+                      fontSize: "1.25rem",
+                      fontWeight: "900",
+                      letterSpacing: "0.02em",
+                      lineHeight: 1.15,
+                      color: "#000000",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    РОСТ И РАЗВИТИЕ
+                  </h3>
+                  <div className="mt-4" style={{ height: 2, width: "100%", backgroundColor: "rgba(0, 0, 0, 0.75)" }} />
+                  <p
+                    className="mt-5"
+                    style={{
+                      fontFamily: "var(--body-font)",
+                      fontSize: "var(--secondary-size)",
+                      lineHeight: "var(--secondary-lh)",
+                      color: "rgba(0, 0, 0, 0.78)",
+                    }}
+                  >
+                    Подключиться к работающему продукту, найти точки роста и выстроить систему масштабирования.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </FadeInSection>
       </div>
     </section>
   );

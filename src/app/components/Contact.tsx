@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { Send } from "lucide-react";
 
-const CV_URL = "https://drive.google.com/file/d/1CefF2K42lhG9cDMnvd3N90YZkjchYGqL/view?usp=drive_link";
+const CV_URL = "https://docs.google.com/document/d/10FY2I4GuWff3-2gXH38mAb0AzFYqak3y/edit?usp=sharing&ouid=108825835130535548336&rtpof=true&sd=true";
 const TG_URL = "https://t.me/Alexsunpro";
 const EMAIL = "Sanbaititl@gmail.com";
 
@@ -34,7 +34,7 @@ export function Contact() {
       <div className="relative z-10" style={{ maxWidth: "var(--container-max)", margin: "0 auto" }}>
         <FadeInSection>
           <h2 className="screen-title" style={{ color: "var(--text-primary)", marginBottom: "var(--heading-gap)" }}>
-            READY TO LEVEL UP?
+            ОБСУДИМ ПРОЕКТ?
           </h2>
         </FadeInSection>
 
@@ -48,8 +48,7 @@ export function Contact() {
               color: "var(--text-secondary)",
             }}
           >
-            Готов обсудить проект, провести аудит или помочь с системным дизайном.
-            Свяжитесь со мной удобным способом.
+            Помогаю продуктам пройти через аудит, пересборку, рост и операционное усиление. Если нужен человек, который видит продукт целиком и доводит решения до результата, свяжитесь со мной.
           </p>
         </FadeInSection>
 

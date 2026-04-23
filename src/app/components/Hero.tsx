@@ -10,20 +10,18 @@ export function Hero() {
   };
 
   const marqueeItems = [
-    "GAME DESIGN",
-    "ECONOMY DESIGN",
-    "SYSTEMS DESIGN",
-    "MONETIZATION",
-    "DATA-DRIVEN DESIGN",
-    "PRODUCT THINKING",
-    "META PROGRESSION",
-    "REWARD SYSTEMS",
-    "SOCIAL MECHANICS",
-    "TMA",
-    "MMORPG",
-    "MOBILE F2P",
-    "PC / STEAM",
-    "CORPORATE GAMIFICATION",
+    "Operations",
+    "Product",
+    "P&L",
+    "Crisis Management",
+    "Team Building",
+    "Strategic Pivots",
+    "Unit Economics",
+    "Monetization",
+    "Gamification",
+    "Operational Audit",
+    "Monetization",
+    "gamification",
   ];
 
   return (
@@ -63,13 +61,13 @@ export function Hero() {
               style={{
                 fontFamily: "var(--label-font)",
                 fontWeight: "800",
-                fontSize: "16px",
-                lineHeight: "var(--label-lh)",
+                fontSize: "clamp(20px, 2.4vw, 32px)",
+                lineHeight: "1.2",
                 letterSpacing: "0.14em",
                 color: "var(--accent-neon)",
               }}
             >
-              CV: baturin GD
+              Game Producer · Head of Operations
             </p>
           </motion.div>
 
@@ -80,33 +78,18 @@ export function Hero() {
             transition={{ delay: 0.2, duration: 0.6 }}
           >
             <h1
-              className="mb-10 text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[var(--h1-size)]"
+              className="mb-24 text-[clamp(36px,6.2vw,110px)] sm:whitespace-nowrap"
               style={{
                 color: "var(--text-primary)",
                 fontFamily: "var(--h1-font)",
                 fontWeight: "var(--h1-weight)",
-                lineHeight: "1.1",
-                letterSpacing: "0.02em",
+                lineHeight: "1.02",
+                letterSpacing: "0",
               }}
             >
-              АЛЕКСАНДР<br />БАТУРИН
+              АЛЕКСАНДР<span className="hidden sm:inline"> </span><span className="block sm:inline">БАТУРИН</span>
             </h1>
           </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="mb-12 max-w-2xl mx-auto"
-            style={{
-              fontFamily: "var(--body-font)",
-              fontSize: "var(--body-size)",
-              lineHeight: "var(--body-lh)",
-              color: "var(--text-secondary)",
-            }}
-          >
-            Специализируюсь на экономике, системном дизайне и монетизации. Смотрю на проект целиком: от прогрессии и мотивации игрока до удержания, метрик и роста продукта.
-          </motion.p>
 
           {/* CTA buttons - centered */}
           <motion.div
@@ -121,8 +104,8 @@ export function Hero() {
               whileTap={{ scale: 0.98 }}
               className="cursor-pointer font-bold uppercase tracking-widest"
               style={{
-                width: "min(420px, 100%)",
-                padding: "24px 64px",
+                width: "min(280px, 100%)",
+                padding: "22px 44px",
                 backgroundColor: "transparent",
                 color: "#FFFFFF",
                 borderRadius: "0",
@@ -140,8 +123,8 @@ export function Hero() {
               whileTap={{ scale: 0.98 }}
               className="cursor-pointer font-bold uppercase tracking-widest"
               style={{
-                width: "min(420px, 100%)",
-                padding: "24px 64px",
+                width: "min(280px, 100%)",
+                padding: "22px 44px",
                 backgroundColor: "transparent",
                 color: "#FFFFFF",
                 borderRadius: "0",
@@ -174,13 +157,13 @@ export function Hero() {
             style={{
               fontFamily: "var(--marquee-font)",
               fontWeight: "var(--marquee-weight)",
-              fontSize: "var(--marquee-size)",
+              fontSize: "calc(var(--marquee-size) * 1.3)",
               letterSpacing: "var(--marquee-ls)",
             }}
           >
             {[...marqueeItems, ...marqueeItems].map((item, i) => (
               <span key={i} className="flex items-center gap-8" style={{ color: "var(--accent-neon)" }}>
-                {item} <span>•</span>
+                {item} <span>·</span>
               </span>
             ))}
           </motion.div>
