@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
 import { Users, Clock, Target, Award, ChevronLeft, ChevronRight, Gamepad2, Smartphone, Globe, Send, MessageCircle, Monitor } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { useIsMobile } from "./ui/use-mobile";
 import minerKombatImg from "../../assets/MK_main.png";
 import mkPreview1 from "../../assets/MK_1.webp";
 import mkPreview2 from "../../assets/MK_2.webp";
@@ -424,36 +425,14 @@ function renderPlatformValue(c: CaseStudy) {
 
 function InfoRow({ label, value, showTopBorder }: { label: string; value: React.ReactNode; showTopBorder?: boolean }) {
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "190px 1fr",
-        borderTop: showTopBorder ? "1px solid var(--border-default)" : "none",
-      }}
-    >
+    <div className={`case-info-row${showTopBorder ? " case-info-row--border" : ""}`}>
       <div
-        className="uppercase"
-        style={{
-          padding: "14px 18px",
-          color: "var(--text-label)",
-          fontFamily: "var(--label-font)",
-          letterSpacing: "var(--label-ls)",
-          fontSize: 12,
-          backgroundColor: "rgba(255, 255, 255, 0.02)",
-          borderRight: "1px solid var(--border-default)",
-        }}
+        className="case-info-label uppercase"
       >
         {label}
       </div>
       <div
-        style={{
-          padding: "14px 18px",
-          color: "var(--text-primary)",
-          fontFamily: "var(--body-font)",
-          fontSize: 18,
-          lineHeight: 1.35,
-          fontWeight: 600,
-        }}
+        className="case-info-value"
       >
         {value}
       </div>
@@ -667,11 +646,50 @@ function renderResultLine(line: string) {
 
 export function CaseStudies() {
   const [index, setIndex] = useState(0);
+  const isMobile = useIsMobile();
+  const mobileNavRef = useRef<HTMLDivElement | null>(null);
   const caseTopRef = useRef<HTMLDivElement | null>(null);
+  const caseCardInViewRef = useRef<HTMLDivElement | null>(null);
+  const swipeStartRef = useRef<{ x: number; y: number; pointerId: number } | null>(null);
+  const pendingScrollRef = useRef(false);
+  const scrollTargetRef = useRef<"mobileNav" | "caseTop">("caseTop");
   const current = cases[index] ?? cases[0];
   const decisions = current ? getKeyDecisions(current) : [];
   const resultMetrics = current ? parseOutcomeMetrics(current) : [];
-  const scrollToCaseTop = () => caseTopRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const isCaseCardInView = useInView(caseCardInViewRef, { margin: "0px 0px -60% 0px" });
+  const scrollToElement = (el: HTMLElement, behavior: ScrollBehavior = "smooth") => {
+    const nav = document.querySelector("nav");
+    const navHeight = nav instanceof HTMLElement ? nav.getBoundingClientRect().height : 0;
+    const top = window.scrollY + el.getBoundingClientRect().top - navHeight - 12;
+    window.scrollTo({ top: Math.max(0, top), behavior });
+  };
+  const scrollToCurrentTarget = (behavior: ScrollBehavior = "smooth") => {
+    const target = scrollTargetRef.current === "mobileNav" ? mobileNavRef.current : caseTopRef.current;
+    if (!target) return;
+    scrollToElement(target, behavior);
+  };
+  const goPrev = () => {
+    pendingScrollRef.current = true;
+    scrollTargetRef.current = isMobile ? "mobileNav" : "caseTop";
+    setIndex((v) => (v - 1 < 0 ? cases.length - 1 : v - 1));
+  };
+  const goNext = () => {
+    pendingScrollRef.current = true;
+    scrollTargetRef.current = isMobile ? "mobileNav" : "caseTop";
+    setIndex((v) => (v + 1 >= cases.length ? 0 : v + 1));
+  };
+  const shouldHandleSwipe = (e: React.PointerEvent) => isMobile || e.pointerType === "touch";
+  const isInteractiveTarget = (target: EventTarget | null) => {
+    const el = target as HTMLElement | null;
+    if (!el) return false;
+    return !!el.closest("button,a,input,textarea,select,summary,[role='button'],[data-swipe-ignore='true']");
+  };
+
+  useEffect(() => {
+    if (!pendingScrollRef.current) return;
+    pendingScrollRef.current = false;
+    requestAnimationFrame(() => scrollToCurrentTarget("smooth"));
+  }, [index]);
 
   return (
     <section id="cases" className="relative py-24 px-6 min-h-screen overflow-hidden" style={{ backgroundColor: "var(--bg-primary)" }}>
@@ -700,9 +718,38 @@ export function CaseStudies() {
           </h2>
         </FadeInSection>
 
+        {!isMobile && isCaseCardInView ? (
+          <div className="case-fixed-nav" aria-hidden="true">
+            <button type="button" className="case-fixed-arrow case-fixed-arrow--left" onClick={goPrev} tabIndex={-1}>
+              <ChevronLeft size={28} />
+            </button>
+            <button type="button" className="case-fixed-arrow case-fixed-arrow--right" onClick={goNext} tabIndex={-1}>
+              <ChevronRight size={28} />
+            </button>
+          </div>
+        ) : null}
+
+        {isMobile ? (
+          <FadeInSection delay={0.02}>
+            <div ref={mobileNavRef} className="mt-4 flex items-center justify-between gap-3">
+              <button type="button" className="case-nav-button case-nav-button--compact text-xs sm:text-sm" onClick={goPrev}>
+                <ChevronLeft size={18} />
+                Предыдущий
+              </button>
+              <div className="text-center" style={{ color: "var(--text-tertiary)", fontSize: 12 }}>
+                {index + 1} / {cases.length}
+              </div>
+              <button type="button" className="case-nav-button case-nav-button--compact text-xs sm:text-sm" onClick={goNext}>
+                Следующий
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </FadeInSection>
+        ) : null}
+
         <FadeInSection delay={0.05}>
           <div
-            className="w-full foil-card foil-card--strong"
+            className="w-full foil-card foil-card--strong case-swipe-area"
             style={{
               backgroundColor: "rgba(10, 10, 10, 0.62)",
               border: "2px solid var(--border-default)",
@@ -710,7 +757,36 @@ export function CaseStudies() {
               padding: "clamp(18px, 2.4vw, 40px)",
               minHeight: "calc(100vh - 260px)",
             }}
-            ref={caseTopRef}
+            ref={(el) => {
+              caseTopRef.current = el;
+              caseCardInViewRef.current = el;
+            }}
+            onPointerDown={(e) => {
+              if (!shouldHandleSwipe(e)) return;
+              if (isInteractiveTarget(e.target)) return;
+              swipeStartRef.current = { x: e.clientX, y: e.clientY, pointerId: e.pointerId };
+              try {
+                (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
+              } catch {
+              }
+            }}
+            onPointerUp={(e) => {
+              if (!shouldHandleSwipe(e)) return;
+              const start = swipeStartRef.current;
+              swipeStartRef.current = null;
+              if (!start) return;
+              const dx = e.clientX - start.x;
+              const dy = e.clientY - start.y;
+              const absX = Math.abs(dx);
+              const absY = Math.abs(dy);
+              if (absX < 60) return;
+              if (absY > 40 && absX < absY * 1.6) return;
+              if (dx > 0) goPrev();
+              else goNext();
+            }}
+            onPointerCancel={() => {
+              swipeStartRef.current = null;
+            }}
           >
             <div style={{ color: "var(--text-primary)", fontFamily: "var(--h2-font)", fontWeight: 800, fontSize: "clamp(28px, 3.3vw, 44px)", lineHeight: 1.05, letterSpacing: "-0.02em" }}>
               {splitHeadline(current.title) ? (
@@ -761,6 +837,38 @@ export function CaseStudies() {
                 <InfoRow label="ПЛАТФОРМА" value={renderPlatformValue(current)} showTopBorder />
               </div>
             </div>
+
+            {resultMetrics.length ? (
+              <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
+                {resultMetrics.map((m, idx) => (
+                  <div
+                    key={`${current.id}-metric-top-${idx}`}
+                    className="p-4"
+                    style={{
+                      backgroundColor: "rgba(204, 255, 0, 0.12)",
+                      border: "1px solid rgba(204, 255, 0, 0.28)",
+                      boxShadow: "0 0 0 1px rgba(204, 255, 0, 0.06), 0 18px 40px rgba(0, 0, 0, 0.35)",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontFamily: "var(--h3-font)",
+                        fontWeight: 900,
+                        fontSize: "clamp(18px, 2vw, 22px)",
+                        lineHeight: 1.15,
+                        color: "var(--accent-neon)",
+                        overflowWrap: "anywhere",
+                      }}
+                    >
+                      {m.value}
+                    </div>
+                    <div className="mt-2" style={{ color: "rgba(204, 255, 0, 0.78)", fontSize: 12, lineHeight: 1.25, overflowWrap: "anywhere" }}>
+                      {m.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : null}
 
             <div className="mt-6">
               <div className="case-section-title">Ситуация</div>
@@ -819,77 +927,9 @@ export function CaseStudies() {
                 ))}
               </div>
             ) : null}
-            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
-              {resultMetrics.map((m, idx) => (
-                <div
-                  key={`${current.id}-metric-${idx}`}
-                  className="p-4"
-                  style={{
-                    backgroundColor: "rgba(204, 255, 0, 0.12)",
-                    border: "1px solid rgba(204, 255, 0, 0.28)",
-                    boxShadow: "0 0 0 1px rgba(204, 255, 0, 0.06), 0 18px 40px rgba(0, 0, 0, 0.35)",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontFamily: "var(--h3-font)",
-                      fontWeight: 900,
-                      fontSize: "clamp(18px, 2vw, 22px)",
-                      lineHeight: 1.15,
-                      color: "var(--accent-neon)",
-                      overflowWrap: "anywhere",
-                    }}
-                  >
-                    {m.value}
-                  </div>
-                  <div className="mt-2" style={{ color: "rgba(204, 255, 0, 0.78)", fontSize: 12, lineHeight: 1.25, overflowWrap: "anywhere" }}>
-                    {m.label}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </FadeInSection>
 
-        <FadeInSection delay={0.1}>
-          <div className="mt-10 flex items-center justify-between gap-4">
-            <button
-              type="button"
-              className="case-nav-button text-sm md:text-base"
-              style={{
-                borderRadius: 0,
-                minWidth: 220,
-              }}
-              onClick={() => {
-                scrollToCaseTop();
-                setIndex((v) => (v - 1 < 0 ? cases.length - 1 : v - 1));
-              }}
-            >
-              <ChevronLeft size={20} />
-              Назад к кейсам
-            </button>
-
-            <div style={{ color: "var(--text-tertiary)", fontSize: 12 }}>
-              {index + 1} / {cases.length}
-            </div>
-
-            <button
-              type="button"
-              className="case-nav-button text-sm md:text-base"
-              style={{
-                borderRadius: 0,
-                minWidth: 220,
-              }}
-              onClick={() => {
-                scrollToCaseTop();
-                setIndex((v) => (v + 1 >= cases.length ? 0 : v + 1));
-              }}
-            >
-              Следующий кейс
-              <ChevronRight size={20} />
-            </button>
-          </div>
-        </FadeInSection>
       </div>
     </section>
   );
