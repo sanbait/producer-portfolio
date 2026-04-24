@@ -54,69 +54,65 @@ export function Contact() {
 
         {/* CTA buttons */}
         <FadeInSection delay={0.2}>
-          <div className="flex flex-wrap gap-6">
+          <div className="flex flex-col gap-4 items-stretch sm:flex-row sm:flex-wrap sm:gap-6">
             <motion.a
               href={TG_URL}
               target="_blank"
               rel="noreferrer"
               whileHover={{ backgroundColor: "var(--accent-neon)", color: "#000000" }}
               whileTap={{ scale: 0.98 }}
-              className="flex items-center gap-2 cursor-pointer font-bold uppercase tracking-widest"
+              className="flex items-center justify-center gap-3 cursor-pointer font-bold uppercase tracking-[0.16em] w-full py-4 px-6 text-[16px] sm:w-auto sm:py-[25px] sm:px-[65px] sm:text-[18px] sm:tracking-widest"
               style={{
-                padding: "25px 65px",
                 backgroundColor: "transparent",
                 color: "#FFFFFF",
                 borderRadius: "0",
                 border: "1px solid var(--accent-neon)",
-                fontSize: "18px",
                 textDecoration: "none",
-                transition: "none"
+                transition: "none",
               }}
               transition={{ duration: 0 }}
             >
               <Send size={20} />
               Написать мне
             </motion.a>
-            <motion.a
-              href={`mailto:${EMAIL}`}
-              whileHover={{ backgroundColor: "var(--accent-neon)", color: "#000000" }}
-              whileTap={{ scale: 0.98 }}
-              className="flex items-center gap-2 cursor-pointer font-bold uppercase tracking-widest"
-              style={{
-                padding: "25px 65px",
-                backgroundColor: "transparent",
-                color: "#FFFFFF",
-                borderRadius: "0",
-                border: "1px solid var(--accent-neon)",
-                fontSize: "18px",
-                textDecoration: "none",
-                transition: "none"
-              }}
-              transition={{ duration: 0 }}
-            >
-              Email
-            </motion.a>
-            <motion.a
-              href={CV_URL}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ backgroundColor: "var(--accent-neon)", color: "#000000" }}
-              whileTap={{ scale: 0.98 }}
-              className="flex items-center gap-2 cursor-pointer font-bold uppercase tracking-widest"
-              style={{
-                padding: "25px 65px",
-                backgroundColor: "transparent",
-                color: "#FFFFFF",
-                border: "1px solid var(--accent-neon)",
-                textDecoration: "none",
-                borderRadius: "0",
-                fontSize: "18px",
-                transition: "none"
-              }}
-              transition={{ duration: 0 }}
-            >
-              CV
-            </motion.a>
+            <div className="grid grid-cols-2 gap-4 w-full sm:flex sm:w-auto sm:flex-wrap sm:gap-6">
+              <motion.a
+                href={`mailto:${EMAIL}`}
+                whileHover={{ backgroundColor: "var(--accent-neon)", color: "#000000" }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center justify-center gap-2 cursor-pointer font-bold uppercase tracking-[0.16em] w-full py-4 px-4 text-[16px] sm:w-auto sm:py-[25px] sm:px-[65px] sm:text-[18px] sm:tracking-widest"
+                style={{
+                  backgroundColor: "transparent",
+                  color: "#FFFFFF",
+                  borderRadius: "0",
+                  border: "1px solid var(--accent-neon)",
+                  textDecoration: "none",
+                  transition: "none",
+                }}
+                transition={{ duration: 0 }}
+              >
+                Email
+              </motion.a>
+              <motion.a
+                href={CV_URL}
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ backgroundColor: "var(--accent-neon)", color: "#000000" }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center justify-center gap-2 cursor-pointer font-bold uppercase tracking-[0.16em] w-full py-4 px-4 text-[16px] sm:w-auto sm:py-[25px] sm:px-[65px] sm:text-[18px] sm:tracking-widest"
+                style={{
+                  backgroundColor: "transparent",
+                  color: "#FFFFFF",
+                  border: "1px solid var(--accent-neon)",
+                  textDecoration: "none",
+                  borderRadius: "0",
+                  transition: "none",
+                }}
+                transition={{ duration: 0 }}
+              >
+                CV
+              </motion.a>
+            </div>
           </div>
         </FadeInSection>
 

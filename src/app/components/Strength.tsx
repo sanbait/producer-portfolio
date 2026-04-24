@@ -92,7 +92,7 @@ export function Strength() {
       className="pt-16 pb-0 px-6 md:px-12" 
       style={{ backgroundColor: "var(--accent-neon)" }}
     >
-      <div style={{ maxWidth: "var(--container-max)", margin: "0 auto" }}>
+      <div style={{ maxWidth: "1680px", margin: "0 auto" }}>
         <FadeInSection>
           <div className="mb-12">
             <h2
@@ -124,7 +124,7 @@ export function Strength() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 lg:gap-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 lg:gap-10">
             {content.map((item, i) => (
               <FadeInSection key={i} delay={0.1 + i * 0.1}>
                 <div
