@@ -37,6 +37,7 @@ interface CaseStudy {
   accent: string;
   accentBg: string;
   metrics: { icon: React.ReactNode; value: string; label: string }[];
+  decisionsTitle?: string;
   // Passport fields (right side in modal)
   role?: string;
   company?: string;
@@ -247,12 +248,13 @@ const cases: CaseStudy[] = [
       "Масштабное космическое ММОРПГ с WEB3-экономикой в духе EVE Online. Бюджет $2–3M, студия в стадии активного роста — к пику разработки 46 человек. Задача: за год выпустить играбельное демо и провести серию плейтестов для защиты концепции перед заказчиком.\n\nGD-направления как структуры на старте не существовало — его предстояло выстраивать параллельно с препродом и масштабировать вместе с ростом студии.",
     task:
       "За 1 год выпустить играбельное демо и провести серию плейтестов для защиты концепции перед заказчиком и инвесторами, параллельно выстроив и масштабировав GD-направление под рост студии.",
+    decisionsTitle: "Действия",
     actions: [
-      "Product Vision: Работал в связке с CEO и CTO над концепциями, питчами и продажей видения инвесторам. На старте вёл продуктовое направление единолично.",
-      "Team Building: Построил GD-команду с нуля, нанимал под конкретные зоны ответственности, распределял блоки работы без пересечений и взаимных блокировок. Выстроил процессы внутри отдела: критерии приёмки, регулярные ревью, прозрачная эскалация.",
-      "Scaling Ownership: Последовательно расширял периметр управления вместе с ростом студии: GD → лид GD-команды → Head of GD на три параллельных проекта студии одновременно.",
-      "Cross-team Coordination: Отвечал за верхнеуровневое планирование отдела и координацию с арт, тех и продюсерским направлениями. Синхронизировал дорожные карты, снимал конфликты приоритетов.",
-      "Stakeholder Management: Защищал концепцию и P&L продукта перед руководством студии и инвесторами на всём протяжении препрода и производства.",
+      "Провёл три жанровых пивота без остановки производства. На каждом пивоте принимал решение что из сделанного переиспользуем, что выбрасываем — команда не начинала с нуля, темп не терялся, ключевые люди не уходили.",
+      "Сформировал GD-отдел с нуля под конкретные зоны ответственности. Нанимал не «в штат», а под задачи — каждый дизайнер закрывал свой блок без пересечений и блокировок. Выстроил внутренние процессы: критерии приёмки, ревью-циклы, прозрачная эскалация.",
+      "Выстроил межотдельскую координацию между GD, арт и тех. Ввёл регулярные точки синхронизации, снимал конфликты приоритетов до того, как они становились блокерами для разработки.",
+      "Защитил концепцию перед заказчиком и инвесторами. После трёх смен жанра — аргументировал финальный выбор космосима через анализ рынка и производственные возможности студии. Получил согласование и бюджет на производство.",
+      "Масштабировал управление параллельно росту студии — от единственного GD на препроде до Head of GD на три проекта одновременно, без потери качества по каждому из них.",
     ],
     outcome: [
       "GD-направление выстроено и масштабировано — до управления тремя параллельными проектами одновременно.",
@@ -448,10 +450,17 @@ function splitOnFirst(text: string, delimiter: string) {
 
 function getKeyDecisions(c: CaseStudy) {
   const raw = c.actions?.length ? c.actions : c.solution ? [c.solution] : [];
-  return raw.map((line, idx) => {
-    const split = splitOnFirst(line, ":");
-    if (split) return { title: split[0], body: split[1] };
-    return { title: `Решение ${idx + 1}`, body: line };
+  return raw.map((line) => {
+    const separators = [" — ", " – ", " - "];
+    const byPeriod = line.match(/^(.+?\.)\s+(.*)$/);
+    if (byPeriod) return { lead: byPeriod[1].trim(), tail: byPeriod[2].trim() };
+    for (const sep of separators) {
+      const split = splitOnFirst(line, sep);
+      if (split) return { lead: split[0].trim(), tail: `— ${split[1].trim()}` };
+    }
+    const byColon = splitOnFirst(line, ":");
+    if (byColon) return { lead: `${byColon[0].trim()}:`, tail: byColon[1].trim() };
+    return { lead: line.trim(), tail: "" };
   });
 }
 
@@ -865,30 +874,15 @@ export function CaseStudies() {
             ) : null}
 
             <div className="mt-10" style={{ borderTop: "1px solid var(--border-default)" }} />
-            <div className="mt-5 case-section-title">Ключевые решения</div>
+            <div className="mt-5 case-section-title">{current.decisionsTitle || "Ключевые решения"}</div>
             <div className="mt-4 flex flex-col gap-4 md:pl-4">
               {decisions.map((d, idx) => (
                 <div key={`${current.id}-decision-${idx}`} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                  <span
-                    aria-hidden="true"
-                    style={{
-                      marginTop: 7,
-                      width: 8,
-                      height: 8,
-                      borderRadius: 999,
-                      backgroundColor: "var(--accent-neon)",
-                      boxShadow: "0 0 0 3px rgba(204, 255, 0, 0.10)",
-                      flex: "0 0 auto",
-                    }}
-                  />
-                  <div style={{ minWidth: 0 }}>
-                    <div style={{ color: "var(--text-primary)", fontFamily: "var(--h3-font)", fontWeight: 800, fontSize: 16, lineHeight: 1.2 }}>
-                      {d.title}
-                    </div>
-                    <div className="mt-2" style={{ color: "var(--text-secondary)" }}>
-                      {d.body}
-                    </div>
-                  </div>
+                  <span style={{ color: "var(--accent-neon)", lineHeight: 1.6, fontWeight: 900 }}>—</span>
+                  <span style={{ lineHeight: 1.6, color: "var(--text-secondary)" }}>
+                    <span style={{ color: "var(--text-primary)", fontWeight: 800 }}>{d.lead}</span>
+                    {d.tail ? ` ${d.tail}` : null}
+                  </span>
                 </div>
               ))}
             </div>
