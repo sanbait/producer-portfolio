@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X } from "lucide-react";
 
-const CV_URL = "https://docs.google.com/document/d/10FY2I4GuWff3-2gXH38mAb0AzFYqak3y/edit?usp=sharing&ouid=108825835130535548336&rtpof=true&sd=true";
+const CV_URL = "https://drive.google.com/file/d/1wT8jA07Md2JiAYYC-BVcVsUk2c2dAsUD/view?usp=sharing";
 
 const links = [
   { label: "Обо мне", href: "#about" },
